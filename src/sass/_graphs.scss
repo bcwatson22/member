@@ -1,0 +1,193 @@
+@keyframes spin {
+  to { transform: rotate(.5turn); }
+}
+
+@keyframes bg {
+  50% { background: $border; }
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.loader {
+  @include hwa();
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: $pn-red;
+  background-image:
+  linear-gradient(to right, transparent 50%, $border 0);
+
+  &:before {
+    content: '';
+    display: block;
+    margin-left: 50%;
+    height: 100%;
+    border-radius: 0 100% 100% 0 / 50%;
+    background-color: inherit;
+    transform-origin: left;
+    animation: spin 2s linear infinite,
+             bg 4s step-end infinite;
+  }
+}
+
+@keyframes fill {
+  0%        { opacity: 0; }
+  64%, 100% { opacity: 1; }
+}
+
+@keyframes mask {
+  0%        { opacity: 1; }
+  64%, 100% { opacity: 0; }
+}
+
+.pie {
+  width: 175px;
+  height: 175px;
+  position: relative;
+  background: $light-grey;
+  border-radius: 50%;
+  overflow: hidden;
+  @include hwa();
+}
+
+.spinner,
+.filler {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  background: $pn-red;
+}
+
+.spinner {
+  right: 50%;
+  border-radius: 100% 0 0 100% / 50% 0 0 50%;
+  z-index: 2;
+  transition: all 1.2s ease;
+  transform: rotate(0);
+  transform-origin: right;
+}
+
+.filler {
+  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+  z-index: 1;
+  border-left: none;
+  left: 50%;
+  opacity: 0;
+}
+
+.mask {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
+  opacity: 1;
+  background: inherit;
+}
+
+.graph {
+  &.horizontal {
+    width: 100%;
+    margin-left: 36px;
+
+    .bar-holder {
+      height: 36px;
+      width: 100%;
+      background: $light-grey;
+      border: 1px solid $border;
+
+      .bar {
+        background: $border;
+        position: relative;
+        width: 0%;
+        height: 100%;
+        @include hwa();
+
+        &:before {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 1px;
+          height: 60px;
+          border-right: 1px solid $border;
+        }
+
+        span,
+        i {
+          position: absolute;
+        }
+
+        span {
+          font-weight: bold;
+          display: block;
+          width: 80px;
+          bottom: -24px;
+
+          &.your-speed {
+            right: 12px;
+            text-align: right;
+          }
+
+          &.speed-actual {
+            right: -92px;
+            text-align: left;
+          }
+        }
+
+        i {
+          color: #fff;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+
+    .range {
+      padding-bottom: 12px;
+      position: relative;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      word-wrap: break-word;
+
+      &:before,
+      &:after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        bottom: -36px;
+        width: 1px;
+        height: 42px;
+        z-index: 2;
+      }
+
+      &:before {
+        left: -1px;
+        border-left: 1px solid $border;
+      }
+
+      &:after {
+        right: 0;
+        border-right: 1px solid $border;
+      }
+
+      .fa {
+        margin: 0 6px;
+      }
+    }
+  }
+}

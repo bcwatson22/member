@@ -1,0 +1,92 @@
+<section class="page-content">
+
+  <heading [title]="title">
+    <breadcrumb header-secondary [title]="title"></breadcrumb>
+  </heading>
+
+  <article class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget class="start" [action]="'central-float'">
+      <h2 widget-header>I've already got a Plusnet Mobile SIM</h2>
+      <div widget-content>
+        <h3>By logging in you can:</h3>
+        <ul class="instructions">
+          <li>View your usage</li>
+          <li>Upgrade your package</li>
+          <li>Blah blah blah</li>
+          <li>And much more</li>
+        </ul>
+      </div>
+      <a href="https://www.plus.net/my-account/mobile/jsf/pages/Login.xhtml" class="button primary" target="_blank" action-primary>Log in to Plusnet Mobile</a>
+      <button class="secondary" action-secondary>Forgot password</button>
+    </widget>
+
+    <widget class="start" [action]="'central-float'">
+      <h2 widget-header>I don't have a Plusnet Mobile SIM</h2>
+      <div widget-content>
+        <div class="feature">
+          <h3>Exclusive deal for Plusnet broadband customers:</h3>
+          <p class="enhance">Get double data on all our Mobile SIM plans!</p>
+        </div>
+      </div>
+      <a href="https://www.plus.net/mobile/plans/sim-only/" class="button primary" target="_blank" action-primary>See our SIM deals</a>
+    </widget>
+
+    <widget class="inline full">
+      <h2 widget-header>Even more stuff...</h2>
+
+      <ul class="details icons above" widget-content>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-signal fa-3x" aria-hidden="true"></i>
+            </span>
+            Coverage checker
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-cog fa-3x" aria-hidden="true"></i>
+            </span>
+            Bolt ons
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i>
+            </span>
+            Smart Cap
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-globe fa-3x" aria-hidden="true"></i>
+            </span>
+            Roaming call tariff
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-shield fa-3x" aria-hidden="true"></i>
+            </span>
+            Security guides
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-question fa-3x" aria-hidden="true"></i>
+            </span>
+            Help
+          </button>
+        </li>
+      </ul>
+    </widget>
+
+  </article>
+
+</section>

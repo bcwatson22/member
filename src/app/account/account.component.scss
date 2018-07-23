@@ -1,0 +1,35 @@
+@import '~sass/variables';
+
+.authorised-person-input,
+.authorised-person-details {
+  &:before {
+    display: none;
+  }
+}
+
+.authorised-person-details {
+  margin-top: 4px;
+
+  h2 {
+    padding-top: 24px;
+    border-top: 4px dotted $border;
+  }
+
+  li {
+    padding-bottom: 6px;
+  }
+}
+
+.new-passwords {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 24px;
+
+  .text-input {
+    width: 50%;
+
+    &:first-of-type {
+      margin-right: 24px;
+    }
+  }
+}

@@ -1,0 +1,221 @@
+<section class="page-content">
+
+  <heading [title]="title">
+    <breadcrumb header-secondary [title]="title"></breadcrumb>
+  </heading>
+
+  <article *ngIf="!tv" class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget class="inline full" [info]="'phone'">
+      <h2 widget-header>YouView TV from Plusnet</h2>
+
+      <article widget-content>
+        <h3>Get your favourite entertainment, sport and more on a YouView box with features you'll love</h3>
+        <div class="package-overview">
+          <div class="feature main">
+            <div class="present icon">
+              <i class="fa fa-tv" aria-hidden="true"></i>
+              <i class="fa fa-youtube-play" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="feature subsequent">
+            <ul class="check-list double">
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>20 premium channels included as standard</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>BT Sport Lite included as standard</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Access to catchup TV and on demand services</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Over 70 Freeview and radio channels</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Pause and rewind live TV</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Record up to 300 hours of TV</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <span class="message" info-message>Call now to order on <strong>0800 011 3217</strong></span>
+      <button class="button primary" info-button>Find out more</button>
+    </widget>
+
+    <widget class="inline full" [info]="'info-circle'">
+      <h2 widget-header>BT Sport via Sky Digital</h2>
+
+      <article widget-content>
+        <h3>Home to live UEFA Champions League football, and packed with much more</h3>
+        <div class="package-overview">
+          <div class="feature main">
+            <div class="present icon">
+              <i class="fa fa-tv" aria-hidden="true"></i>
+              <i class="fa fa-futbol-o" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="feature subsequent">
+            <ul class="check-list">
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Watch all these channels in glorious HD: BT Sport 1, BT Sport 2, BT Sport and BT Sport ESPN</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>The only place you can watch UEFA Champions League and UEFA Europa League live</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Each season watch live 42 Premier League, 24 FA Cup matches, and 30 Scottish Premiership matches</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <span class="message" info-message>To add BT Sport you need to already own a Sky Digital box and satellite</span>
+      <button class="button primary" info-button>Find out more</button>
+    </widget>
+
+  </article>
+
+  <article *ngIf="tv" class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget *ngIf="!issues" class="issue-status full" [action]="'vertical'">
+      <i class="fa fa-check fa-4x" aria-hidden="true" widget-header></i>
+
+      <article class="status-bar" widget-content>
+        No issues detected with your TV service.
+      </article>
+
+      <button class="button primary" action-primary>Report a fault</button>
+    </widget>
+
+    <widget *ngIf="issues" class="status full" [action]="'vertical'">
+      <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true" widget-header></i>
+
+      <article class="status-bar" widget-content>
+        We have detected some issues which could affect your TV service.
+      </article>
+
+      <button class="button primary" action-primary>Report a fault</button>
+    </widget>
+
+    <widget class="package current" [action]="'central'">
+      <h2 widget-header>Your TV</h2>
+
+      <article widget-content>
+        <div class="package-overview">
+          <div class="feature main">
+            <span class="pullout">YouView Box</span>
+            18 month contract
+          </div>
+          <div class="feature subsequent">
+            <ul class="check-list">
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>20 premium channels and BT Sport Lite</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Over 70 Freeview and radio channels</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Catchup TV and on demand services</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Pause and rewind live TV</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>Change your package</button>
+    </widget>
+
+    <widget class="package upgrade" [action]="'central'">
+      <h2 widget-header>Recommended deal</h2>
+
+      <i class="fa fa-tag fa-4x" aria-hidden="true" widget-extra></i>
+
+      <article widget-content>
+        <h3>YouView+ Box</h3>
+        <div class="present icon">
+          <i class="fa fa-certificate" aria-hidden="true"></i>
+          <span>Record up to 300 hours of TV</span>
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>See this deal</button>
+    </widget>
+
+    <widget class="full add-ons" [action]="'line'">
+      <h2 widget-header>Channel Packs</h2>
+
+      <article class="blocks four" widget-content>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i> Entertainment Lite</h3>
+          <p>All the best entertainment brought to your home.</p>
+          <span class="status active"><i class="fa fa-check" aria-hidden="true"></i> Active (included)</span>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-futbol-o fa-2x" aria-hidden="true"></i> BT Sport Lite</h3>
+          <p>More sport than you can kick a football at.</p>
+          <span class="status active"><i class="fa fa-check" aria-hidden="true"></i> Active (included)</span>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-tv fa-2x" aria-hidden="true"></i> High Definition</h3>
+          <p>Get your favourite shows in glorious HD.</p>
+          <span class="status pending"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Active from 1st Jan</span>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-child fa-2x" aria-hidden="true"></i> Kids</h3>
+          <p>Enough shows to keep your kids entertained for hours.</p>
+          <div class="action">
+            <button class="button primary">Add this pack</button>
+          </div>
+        </div>
+
+      </article>
+
+      <button class="button secondary" action-primary>Show all channels <i class="fa fa-caret-down" aria-hidden="true"></i></button>
+      <button class="secondary inline-icon" action-secondary><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Manage channel packs</button>
+    </widget>
+
+    <widget class="inline full">
+      <h2 widget-header>Even more stuff...</h2>
+
+      <ul class="details icons above" widget-content>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-info-circle fa-3x" aria-hidden="true"></i>
+            </span>
+            More about TV
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-futbol-o fa-3x" aria-hidden="true"></i>
+            </span>
+            More about BT Sport
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-plug fa-3x" aria-hidden="true"></i>
+            </span>
+            Set up guide
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-question fa-3x" aria-hidden="true"></i>
+            </span>
+            TV FAQs
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-question-circle-o fa-3x" aria-hidden="true"></i>
+            </span>
+            BT Sport FAQs
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-gavel fa-3x" aria-hidden="true"></i>
+            </span>
+            Legal info
+          </button>
+        </li>
+      </ul>
+    </widget>
+
+  </article>
+
+</section>

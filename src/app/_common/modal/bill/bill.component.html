@@ -1,0 +1,30 @@
+<div class="modal-bg" (click)="closeModal(bill)"></div>
+<div class="modal-content overview">
+  <h2>{{bill?.date | formatDate}}</h2>
+  <h3 class="bill-price"><i class="fa fa-gbp"></i>{{bill?.total.toFixed(2) | slice:0:2}}.<sup>{{bill?.total.toFixed(2) | slice:3:5}}</sup><small>including VAT</small></h3>
+  <ul class="details">
+    <li>
+      <h3>VAT amount</h3>
+      <span class="detail">{{bill?.total | multiply:5:1}}</span>
+    </li>
+    <li>
+      <h3>Charges</h3>
+      <span class="detail">{{bill?.charges | currency:'GBP':true}}</span>
+    </li>
+    <li>
+      <h3>Bill ID</h3>
+      <span class="detail">{{user + '-bill-' + bill?.id}}</span>
+    <li>
+      <h3>Status</h3>
+      <span *ngIf="bill?.paid" class="detail status"><i class="fa fa-check" aria-hidden="true"></i> Paid on <span>{{bill?.date | date:'d MMM yy'}}</span></span>
+      <span *ngIf="!bill?.paid" class="detail status"><i class="fa fa-times" aria-hidden="true"></i> Outstanding <a>Pay now</a></span>
+    </li>
+  </ul>
+  <a href="./../assets/{{user}}-bill-13.pdf" class="bill-link" target="_blank">
+    <img class="bill-image" src="./../assets/{{user}}-bill-13.png">
+    <span class="icon">
+      <i class="fa fa-file-text-o fa-3x" aria-hidden="true"></i>
+    </span>
+  </a>
+  <button class="close" (click)="closeModal(bill)"></button>
+</div>

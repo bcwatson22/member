@@ -1,0 +1,10 @@
+<nav class="nav-{{navSorted?.length}}">
+  <ul>
+    <li *ngFor="let item of navSorted">
+      <a [class.active]="router.isActive('/' + item.id)" [attr.data-name]="item.name" (click)="emitRoute(item.id)">
+        <i *ngIf="item.cssClass" [ngClass]="['fa', 'fa-3x', 'fa-' + item.cssClass]"></i>
+        <i *ngIf="!item.cssClass" [ngClass]="['fa', 'fa-3x', 'fa-' + item.id]"></i>
+      </a>
+    </li>
+  </ul>
+</nav>

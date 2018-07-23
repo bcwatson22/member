@@ -1,0 +1,16 @@
+<ng-content select="[widget-header]"></ng-content>
+<ng-content select="[widget-content]"></ng-content>
+<div *ngIf="action" class="action {{action}}">
+  <ng-content select="[action-primary]"></ng-content>
+  <ng-content select="[action-secondary]"></ng-content>
+</div>
+<div *ngIf="info" class="info">
+  <div class="banner">
+    <span class="icon">
+      <i class="fa fa-{{info}} fa-2x" aria-hidden="true"></i>
+    </span>
+    <ng-content select="[info-message]"></ng-content>
+    <ng-content select="[info-button]"></ng-content>
+  </div>
+</div>
+<ng-content select="[widget-extra]"></ng-content>

@@ -1,0 +1,161 @@
+<section class="page-content">
+
+  <heading [title]="'Hello ' + account?.name.first">
+    <h2 header-secondary>Welcome to your Plusnet account</h2>
+  </heading>
+
+  <article class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget class="four" [action]="'standard'">
+      <h2 widget-header>Account details</h2>
+
+      <ul class="details" widget-content>
+        <li>
+          <h3>Username</h3>
+          <span class="detail">{{account?.username}}</span>
+        </li>
+        <li>
+          <h3>Email address</h3>
+          <span class="detail">{{account?.email.primary}}</span>
+        </li>
+        <li>
+          <h3>Security question &amp; answer</h3>
+          <span class="detail">{{account?.security.question}} <span class="chevron"></span> {{account?.security.answer}}</span>
+        </li>
+        <li>
+          <h3>Your broadband phone line</h3>
+          <span class="detail">{{broadband?.details.phoneNumber | formatPhoneNo}}</span>
+        </li>
+        <li>
+          <h3>Contract end date</h3>
+          <span class="detail">{{billing?.endDate | formatDate}}</span>
+        </li>
+      </ul>
+
+      <button class="button primary" action-primary>View &amp; edit details</button>
+    </widget>
+
+    <widget class="six" [action]="'standard'">
+      <h2 widget-header>Products and services</h2>
+
+      <article class="products full" widget-content>
+        <div *ngIf="!broadband" class="product inactive">
+          <span class="icon">
+            <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">No broadband</h3>
+          <a href="https://www.plus.net/home-broadband/" class="button secondary" target="_blank">+ Get broadband</a>
+        </div>
+        <div *ngIf="broadband" class="product">
+          <span class="icon">
+            <i class="fa fa-wifi fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">{{broadband?.contract.package}}</h3>
+          <span *ngIf="!issuesBB" class="issue"><i class="fa fa-check" aria-hidden="true"></i>No issues</span>
+          <span *ngIf="issuesBB" class="issue"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><a routerLink="/broadband">Issues</a></span>
+          <a routerLink="/broadband" class="button secondary">Manage broadband</a>
+        </div>
+        <div *ngIf="!phone" class="product inactive">
+          <span class="icon">
+            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">No phone</h3>
+          <a href="https://www.plus.net/home-broadband/call-plans/" class="button secondary" target="_blank">+ Get phone</a>
+        </div>
+        <div *ngIf="phone" class="product">
+          <span class="icon">
+            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">{{phone?.contract.package}}</h3>
+          <span *ngIf="!issuesPhone" class="issue"><i class="fa fa-check" aria-hidden="true"></i>No issues</span>
+          <span *ngIf="issuesPhone" class="issue"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><a routerLink="/phone">Issues</a></span>
+          <a routerLink="/phone" class="button secondary">Manage phone</a>
+        </div>
+        <div *ngIf="!mobile" class="product inactive">
+          <span class="icon">
+            <i class="fa fa-mobile fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">No Plusnet Mobile</h3>
+          <a href="https://www.plus.net/mobile/plans/sim-only/" class="button secondary" target="_blank">+ Order a SIM</a>
+        </div>
+        <div *ngIf="mobile" class="product">
+          <span class="icon">
+            <i class="fa fa-mobile fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">{{mobile?.contract.package}}</h3>
+          <a routerLink="/mobile" class="button secondary">Manage mobile</a>
+        </div>
+        <div *ngIf="!tv" class="product inactive">
+          <span class="icon">
+            <i class="fa fa-tv fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">No Plusnet TV</h3>
+          <a href="https://www.plus.net/tv/" class="button secondary" target="_blank">+ Add TV</a>
+        </div>
+        <div *ngIf="tv" class="product">
+          <span class="icon">
+            <i class="fa fa-tv fa-2x" aria-hidden="true"></i>
+          </span>
+          <h3 class="detail">{{tv?.contract.package}}</h3>
+          <span *ngIf="!issuesTV" class="issue"><i class="fa fa-check" aria-hidden="true"></i>No issues</span>
+          <span *ngIf="issuesTV" class="issue"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><a routerLink="/phone">Issues</a></span>
+          <a routerLink="/tv" class="button secondary">Manage TV</a>
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>Change &amp; upgrade products</button>
+    </widget>
+
+    <widget class="inline full" [action]="'standard'">
+      <h2 widget-header>Bills and payments</h2>
+
+      <ul class="details" widget-content>
+        <li *ngIf="billing">
+          <h3>Latest bill</h3>
+          <span class="detail" *ngFor="let bill of (billing.bills | slice:billing.bills.length -1)">{{bill.amount | currency:'GBP':true}}</span>
+        </li>
+        <li>
+          <h3>Due date</h3>
+          <span class="detail">{{latestBill?.id | billingDate:billing?.startDate:billing?.frequency:'due'}}</span>
+        </li>
+        <li>
+          <h3>Payment method</h3>
+          <span class="detail">{{billing?.paymentMethod}}</span>
+        </li>
+        <li>
+          <h3>Next bill date</h3>
+          <span class="detail">{{latestBill?.id | billingDate:billing?.startDate:billing?.frequency:'next'}}</span>
+        </li>
+      </ul>
+
+      <button class="button primary" action-primary>View / edit billing info</button>
+    </widget>
+
+    <widget class="text-suggest six" [action]="'standard'">
+      <h2 widget-header>Plusnet Mobile</h2>
+
+      <div class="body" widget-content>
+        <span class="icon">
+          <i class="fa fa-mobile fa-5x" aria-hidden="true"></i>
+        </span>
+        <p>Our great value plans keep your surfing, talking and texting for longer and with coverage cross more than 99% of the UK, you'll rarely struggle to fill those signal bars. To top it off, because you're already a Plusnet customer, we can offer you a better deal.</p>
+      </div>
+
+      <button class="button primary" action-primary>Order your SIM</button>
+    </widget>
+
+    <widget class="text-suggest four" [action]="'standard'">
+      <h2 widget-header>Recommend a friend</h2>
+
+      <div class="body" widget-content>
+        <span class="icon">
+          <i class="fa fa-smile-o fa-5x" aria-hidden="true"></i>
+        </span>
+        <p>Our referrals scheme gives you a monthly discount for every person that joins us from your recommendation. Recommend a friend today to start saving money.</p>
+      </div>
+
+      <button class="button primary" action-primary>Start saving money</button>
+    </widget>
+
+  </article>
+</section>

@@ -1,0 +1,7 @@
+<navigation (newRoute)="canWeRoute($event)"></navigation>
+
+<main [@routerAnimation]="routerState" (@routerAnimation.start)="animationStart($event)" (@routerAnimation.done)="animationDone($event)">
+
+    <router-outlet></router-outlet>
+
+</main>

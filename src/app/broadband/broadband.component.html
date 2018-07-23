@@ -1,0 +1,260 @@
+<section class="page-content">
+
+  <heading [title]="title">
+    <breadcrumb header-secondary [title]="title"></breadcrumb>
+  </heading>
+
+  <article *ngIf="!broadband" class="no-package">
+    <i class="fa fa-meh-o fa-5x" aria-hidden="true"></i>
+    <h1>You don't currently have Plusnet Broadband.</h1>
+    <h2><a href="https://www.plus.net">Sign up</a> to enjoy our award-winning services!</h2>
+  </article>
+
+  <article *ngIf="broadband" class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget class="issue-status full" [action]="'vertical'">
+
+        <i *ngIf="!issues" class="fa fa-check fa-4x" aria-hidden="true" widget-header></i>
+
+        <article *ngIf="!issues" class="status-bar" widget-content>
+          No issues detected with your broadband service.
+        </article>
+
+        <i *ngIf="issues" class="fa fa-exclamation-triangle fa-4x" aria-hidden="true" widget-header></i>
+
+        <article *ngIf="issues" class="status-bar" widget-content>
+          We have detected some issues which could affect your broadband service.
+        </article>
+
+      <button class="button primary" action-primary>Report a fault</button>
+      <div class="tabbed" action-secondary>
+        <button class="button primary" (click)="utils.toggleUiStates('speedTestState', $event, 'speedTab1State', ['speedTab1State', 'speedTab2State']); revertSpeedTest()" action-secondary>Run a speed test</button>
+      </div>
+
+      <div class="hidden-content" [@slideAnimation]="speedTestState" widget-extra>
+        <div class="hidden-tab speed-instructions" [@tabAnimation]="speedTab1State">
+          <h2>Before you run a speed test</h2>
+
+          <ul class="instructions">
+            <li>Connect your device to your router via an ethernet cable if possible</li>
+            <li>If it's not possible to connect via cable position your device as close to the router as possible to maximise Wi-Fi signal</li>
+            <li>Pause any downloads you have in progress</li>
+            <li>Pause any video or music you're streaming online</li>
+            <li>Pause any other internet based services (such as Plusnet TV)</li>
+            <li>Minimise any internet use such as browsing the web and checking emails until the test has finished</li>
+          </ul>
+          <div class="action central">
+            <button class="button primary" (click)="utils.toggleUiStates('speedTab1State', null, 'speedTab2State', null); getSpeedValues()">Run speed test</button>
+          </div>
+        </div>
+        <div class="hidden-tab info-bar speed-results" [@tabAnimation]="speedTab2State">
+
+          <section class="speeds">
+
+            <article class="speed download">
+              <h3 class="icon"><i class="fa fa-arrow-circle-down fa-4x" aria-hidden="true"></i>Download</h3>
+              <figure class="graph horizontal">
+                <figcaption class="range">
+                  <span class="range-lower">5MB/s</span>
+                  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  Expected range for your line
+                  <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  <span class="range-upper">100MB/s</span>
+                </figcaption>
+                <div class="bar-holder">
+                  <div class="bar" [@graphXAnimation]="{ value: downloadState, params: { width: downloadValues.barWidth, colour: downloadValues.barColour } }">
+                    <i class="fa fa-check bar-indicator" aria-hidden="true"></i>
+                    <span class="your-speed">Your speed</span>
+                    <span class="speed-actual">20MB/s</span>
+                  </div>
+                </div>
+              </figure>
+            </article>
+
+            <article class="speed upload">
+              <h3 class="icon"><i class="fa fa-arrow-circle-up fa-4x" aria-hidden="true"></i>Upload</h3>
+              <figure class="graph horizontal">
+                <figcaption class="range">
+                  <span class="range-lower">3MB/s</span>
+                  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  Expected range for your line
+                  <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  <span class="range-upper">20MB/s</span>
+                </figcaption>
+                <div class="bar-holder">
+                  <div class="bar" [@graphXAnimation]="{ value: uploadState, params: { width: uploadValues.barWidth, colour: uploadValues.barColour } }">
+                    <i class="fa fa-check bar-indicator" aria-hidden="true"></i>
+                    <span class="your-speed">Your speed</span>
+                    <span class="speed-actual">10MB/s</span>
+                  </div>
+                </div>
+              </figure>
+            </article>
+
+          </section>
+
+          <div class="info">
+            <div class="banner">
+              <span class="icon">
+                <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+              </span>
+              <span class="message">Speeds are within the expected range for your line.</span>
+              <a href="https://www.plus.net/help/broadband/about-broadband-speeds/#how-to-fastest-speed-possible" target="_blank" class="secondary">Get tips to improve your speed</a>
+              <button class="button primary" (click)="utils.toggleUiStates('speedTab2State', null, 'speedTab1State', null); revertSpeedTest()">Run another speed test</button>
+            </div>
+          </div>
+        </div>
+        <div class="loading" [@loaderAnimation]="speedLoaderState"><div class="loader"></div></div>
+      </div>
+    </widget>
+
+    <widget class="package current" [action]="'central'">
+      <h2 widget-header>Your broadband</h2>
+
+      <article widget-content>
+        <h3>{{broadband?.contract.package}}</h3>
+        <p>Suitable for everyday web browsing and basic streaming.</p>
+
+        <div class="package-overview">
+          <div class="feature main">
+            Up to <span class="pullout">17<span>MB</span></span> estimated download speed
+          </div>
+          <div class="feature subsequent">
+            <ul class="check-list">
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Unlimited usage</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>18 month contract</li>
+              <li class="inline-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i>Includes line rental</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>Change your package</button>
+    </widget>
+
+    <widget class="package upgrade" [action]="'central'">
+      <h2 widget-header>Recommended deal</h2>
+
+      <i class="fa fa-tag fa-4x" aria-hidden="true" widget-extra></i>
+
+      <article widget-content>
+        <h3>Unlimited Fibre Extra</h3>
+        <div class="present icon">
+          <i class="fa fa-certificate" aria-hidden="true"></i>
+          <span>Up to 5x faster</span>
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>See this deal</button>
+    </widget>
+
+    <widget class="full">
+      <h2 widget-header>Security</h2>
+
+      <article class="blocks three" widget-content>
+
+        <div class="block">
+          <h3>Firewall</h3>
+          <span class="icon faded">
+            <i class="fa fa-google-wallet fa-5x" aria-hidden="true"></i>
+          </span>
+          <p>Added protection from hackers and malware.</p>
+          <div class="action">
+            <button class="toggle inline-icon" (click)="utils.toggleButton($event)">
+              <i class="fa fa-toggle-on fa-2x" aria-hidden="true"></i>
+              <span>Firewall is <strong>ON</strong></span>
+            </button>
+            <button class="button primary">Configure firewall</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Plusnet Safeguard</h3>
+          <span class="icon faded">
+            <i class="fa fa-eye-slash fa-5x" aria-hidden="true"></i>
+          </span>
+          <p>Block access to undesirable websites.</p>
+          <div class="action">
+            <button class="toggle inline-icon" (click)="utils.toggleButton($event)">
+              <i class="fa fa-toggle-off fa-2x" aria-hidden="true"></i>
+              <span>Safeguard is <strong>OFF</strong></span>
+            </button>
+            <button class="button primary">Safeguard control panel</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Plusnet Protect</h3>
+          <span class="icon faded">
+            <i class="fa fa-shield fa-5x" aria-hidden="true"></i>
+          </span>
+          <p>Malware protection for your PC &amp; Mac.</p>
+          <div class="action">
+            <button class="toggle inline-icon">
+              <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+              <span>Protect is registered</span>
+            </button>
+            <button class="button primary">Download Protect</button>
+          </div>
+        </div>
+
+      </article>
+    </widget>
+
+    <widget class="inline full">
+      <h2 widget-header>Even more stuff...</h2>
+
+      <ul class="details icons above" widget-content>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-envelope fa-3x" aria-hidden="true"></i>
+            </span>
+            Webmail
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-cog fa-3x" aria-hidden="true"></i>
+            </span>
+            Connection settings
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-users fa-3x" aria-hidden="true"></i>
+            </span>
+            Surf
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-desktop fa-3x" aria-hidden="true"></i>
+            </span>
+            Auto hardware setup
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-address-card fa-3x" aria-hidden="true"></i>
+            </span>
+            Static IP
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-wrench fa-3x" aria-hidden="true"></i>
+            </span>
+            Tools
+          </button>
+        </li>
+      </ul>
+    </widget>
+
+  </article>
+</section>

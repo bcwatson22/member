@@ -1,0 +1,62 @@
+@import '~sass/variables';
+
+.product {
+  padding: 0 24px 0 72px;
+  position: relative;
+  border-bottom: 1px solid $border;
+  display: flex;
+  align-items: center;
+
+  &:first-of-type {
+    border-top: 1px solid $border;
+  }
+
+  &.inactive {
+    * {
+      opacity: 0.25;
+    }
+
+    .button {
+      opacity: 1;
+    }
+  }
+
+  .detail {
+    padding: 18px 0;
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+
+  .issue,
+  .button {
+    text-align: center;
+  }
+
+  .issue {
+    padding: 12px 6px;
+    border-left: 1px solid $border;
+    border-right: 1px solid $border;
+    min-width: 80px;
+
+    .fa {
+      display: block;
+    }
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: $pn-red;
+      }
+
+      &:active {
+        color: $pn-blue;
+      }
+    }
+  }
+
+  .button {
+    margin-right: 0;
+    min-width: 140px;
+  }
+}

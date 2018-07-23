@@ -1,0 +1,29 @@
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+li {
+  list-style: none;
+
+  .instructions & {
+    list-style: disc;
+    margin-left: 24px;
+  }
+}
+
+img {
+  display: block;
+}

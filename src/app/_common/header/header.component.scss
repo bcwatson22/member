@@ -1,0 +1,6 @@
+@import '~sass/mixins';
+
+.text-input {
+  width: calc(50% - 12px);
+  float: right;
+}

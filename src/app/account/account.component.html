@@ -1,0 +1,424 @@
+<section class="page-content">
+
+  <heading [title]="title">
+    <breadcrumb header-secondary [title]="title"></breadcrumb>
+  </heading>
+
+  <article class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget class="inline full" [action]="'standard'">
+      <h2 widget-header>Your contact details</h2>
+
+      <ul class="details icons" widget-content>
+        <li>
+          <span class="icon faded">
+            <i *ngIf="account.gender == 'male'" class="fa fa-male fa-2x" aria-hidden="true"></i>
+            <i *ngIf="account.gender == 'female'" class="fa fa-female fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <h3>Name</h3>
+          <span class="detail">{{account?.name.first}} {{account?.name.surname}}</span>
+        </li>
+        <li>
+          <span class="icon faded">
+            <i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <h3>Email address</h3>
+          <span class="detail">{{account?.email.primary}}</span>
+
+          <h3>Secondary email address</h3>
+          <span *ngIf="account.email.secondary" class="detail">{{account?.email.secondary}}</span>
+          <span *ngIf="!account.email.secondary" class="detail">Not supplied</span>
+        </li>
+        <li>
+          <span class="icon faded">
+            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <h3>Phone number</h3>
+          <span class="detail">{{broadband?.details.phoneNumber | formatPhoneNo}}</span>
+
+          <h3>Mobile number</h3>
+          <span *ngIf="account.mobile" class="detail">{{account?.mobile | formatPhoneNo}}</span>
+          <span *ngIf="!account.mobile" class="detail">Not supplied</span>
+        </li>
+      </ul>
+
+      <button class="button primary" action-primary>Edit your details</button>
+
+      <section class="hidden-content" widget-extra>
+
+        <div [@slideAnimation]="authorisedInfoState">
+
+          <div class="hidden-tab info-source" [@tabAnimation]="authorisedInfoBarState">
+            <div class="info">
+              <div class="banner">
+                <span class="icon">
+                  <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+                </span>
+                <span class="message">We can only talk to you about your account.</span>
+                <div class="tabbed">
+                  <button class="button secondary" (click)="utils.toggleUiStates('authorisedPersonState', $event, 'authorisedTab1State', ['authorisedTab1State', 'authorisedTab2State'])">Add another authorised person</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div [@slideAnimation]="authorisedPersonState">
+
+          <div class="hidden-tab flex-tab authorised-person-input" [@tabAnimation]="authorisedTab1State">
+            <h2>Authorised person</h2>
+
+            <ul class="details icons" widget-content>
+              <li>
+                <span class="icon faded">
+                  <i class="fa fa-male fa-2x" aria-hidden="true"></i>
+                </span>
+
+                <div class="text-input">
+                  <input type="text" required>
+                  <label>Name</label>
+                </div>
+              </li>
+              <li>
+                <span class="icon faded">
+                  <i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i>
+                </span>
+
+                <div class="text-input">
+                  <input type="text" required>
+                  <label>Email address</label>
+                </div>
+              </li>
+              <li>
+                <span class="icon faded">
+                  <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+                </span>
+
+                <div class="text-input">
+                  <input type="text" required>
+                  <label>Phone number</label>
+                </div>
+              </li>
+            </ul>
+
+            <div class="action vertical">
+              <button class="button primary" (click)="saveToSession($event)">Save details</button>
+              <button class="secondary" (click)="removeFromSession(authorisedPersonArray); this.utils.toggleUiStates('authorisedPersonState', 'info-source', 'authorisedInfoBarState', ['authorisedInfoState', 'authorisedInfoBarState', 'authorisedTab1State']);">Remove authorised person</button>
+            </div>
+          </div>
+
+          <div class="hidden-tab flex-tab authorised-person-details" [@tabAnimation]="authorisedTab2State">
+            <h2>Authorised person</h2>
+
+            <ul class="details icons" widget-content>
+              <li>
+                <span class="icon faded">
+                  <i class="fa fa-male fa-2x" aria-hidden="true"></i>
+                </span>
+
+                <h3>Name</h3>
+                <span class="detail">{{authorisedPerson?.authorisedPersonName}}</span>
+              </li>
+              <li>
+                <span class="icon faded">
+                  <i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i>
+                </span>
+
+                <h3>Email address</h3>
+                <span class="detail">{{authorisedPerson?.authorisedPersonEmailAddress}}</span>
+              </li>
+              <li>
+                <span class="icon faded">
+                  <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+                </span>
+
+                <h3>Phone number</h3>
+                <span class="detail">{{authorisedPerson?.authorisedPersonPhoneNumber | formatPhoneNo}}</span>
+              </li>
+            </ul>
+
+            <div class="action vertical">
+              <button class="button primary" (click)="utils.toggleUiStates('authorisedTab2State', null, 'authorisedTab1State', null)">Edit or remove</button>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+    </widget>
+
+    <widget class="inline full" [action]="'standard'">
+      <h2 widget-header>Address of your Plusnet service</h2>
+
+      <ul class="details icons" widget-content>
+        <li>
+          <span class="icon faded">
+            <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <span class="detail">
+            <span class="vcard">
+              <span class="adr">
+                <span class="street-address">{{broadband?.details.address.houseNameNo}}, {{broadband?.details.address.road}}</span>
+                <span class="locality">{{broadband?.details.address.city}}</span>
+                <span class="region">{{broadband?.details.address.county}}</span>
+                <span class="postal-code">{{broadband?.details.address.postcode}}</span>
+              </span>
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="icon faded">
+            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <h3>Your broadband phone line</h3>
+          <span class="detail">{{broadband?.details.phoneNumber | formatPhoneNo}}</span>
+        </li>
+      </ul>
+
+      <button class="button primary" action-primary>I'm moving house</button>
+    </widget>
+
+    <widget class="inline full hidden" [action]="'vertical'">
+      <h2 widget-header>Your access details</h2>
+
+      <ul class="details icons" widget-content>
+        <li>
+          <span class="icon faded">
+            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <h3>Username</h3>
+          <span class="detail">{{account?.username}}</span>
+        </li>
+        <li>
+          <span class="icon faded">
+            <i class="fa fa-question fa-2x" aria-hidden="true"></i>
+          </span>
+
+          <h3>Password reset question</h3>
+          <span class="detail">{{account?.security.question}}</span>
+        </li>
+        <li class="no-icon">
+          <h3>Answer</h3>
+          <span class="detail">{{account?.security.answer}}</span>
+          <button class="secondary">Edit</button>
+        </li>
+      </ul>
+
+      <div class="tabbed" action-secondary>
+        <button class="button primary" (click)="utils.toggleUiStates('accessDetailsState', $event, 'accessTab1State', ['accessTab1State', 'accessTab2State', 'accessTab3State', 'accessTab4State'])" action-primary >Change password</button>
+      </div>
+
+      <div class="hidden-content" [@slideAnimation]="accessDetailsState" widget-extra>
+        <div class="hidden-tab password-overview" [@tabAnimation]="accessTab1State">
+          <h2>Your password is used for the following services</h2>
+          <ul class="details">
+            <li>
+              <i class="fa fa-user" aria-hidden="true"></i>
+              Plusnet account
+            </li>
+            <li>
+              <i class="fa fa-globe" aria-hidden="true"></i>
+              Internet connection settings
+            </li>
+            <li>
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+              Plusnet email
+            </li>
+          </ul>
+
+          <div class="action next-prev">
+            <div>
+              <h3>What type of router are you using?</h3>
+              <ul class="details">
+                <li>
+                  <label><input type="radio" name="router" checked="checked">Plusnet router</label>
+                </li>
+                <li>
+                  <label><input type="radio" name="router">My own router</label>
+                </li>
+                <li>
+                  <label><input type="radio" name="router">I don't know</label>
+                </li>
+              </ul>
+            </div>
+            <button class="button primary" (click)="utils.toggleUiStates('accessTab1State', null, 'accessTab2State', null)">Next step <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+
+        <div class="hidden-tab password-after-reset" [@tabAnimation]="accessTab2State">
+          <h2>After you've reset your password your router will need to reconnect</h2>
+          <ul class="column icons">
+            <li>
+              <span class="icon faded">
+                <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+              </span>
+              Before continuing check your router is switched on and connected to the internet
+            </li>
+            <li>
+              <span class="icon faded">
+                <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>
+              </span>
+              <a href="https://www.plus.net/help/broadband/connection-troubleshooting/" target="_blank">What if my router doesn't reconnect?</a>
+              Take a note of these instructions in case you can't get online
+            </li>
+          </ul>
+          <div class="action next-prev">
+            <button class="button primary" (click)="utils.toggleUiStates('accessTab2State', null, 'accessTab1State', null)"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous step</button>
+            <button class="button primary" (click)="utils.toggleUiStates('accessTab2State', null, 'accessTab3State', null)">Next step <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <div class="hidden-tab password-current" [@tabAnimation]="accessTab3State">
+          <h2>Enter your current password</h2>
+          <div>
+            <div class="text-input inline-icon">
+              <input type="password" required>
+              <label>Current password</label>
+              <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+              <button (click)="utils.revealPassword($event)">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="action next-prev">
+            <button class="button primary" (click)="utils.toggleUiStates('accessTab3State', null, 'accessTab2State', null)"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous step</button>
+            <button class="button primary" (click)="utils.toggleUiStates('accessTab3State', null, 'accessTab4State', null)">Next step <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <div class="hidden-tab password-create" [@tabAnimation]="accessTab4State">
+          <h2>Create your new password</h2>
+          <div class="new-passwords">
+            <div class="text-input inline-icon">
+              <input type="password" required>
+              <label>Enter new password</label>
+              <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+              <button (click)="utils.revealPassword($event)">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="text-input inline-icon">
+              <input type="password" required>
+              <label>Confirm new password</label>
+              <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+              <button (click)="utils.revealPassword($event)">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <span class="inline-icon"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i> Your password needs to be between 8-16 characters and it must not contain your username.</span>
+          <div class="action next-prev">
+            <button class="button primary" (click)="utils.toggleUiStates('accessTab4State', null, 'accessTab3State', null)"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous step</button>
+            <button class="button primary" (click)="utils.toggleUiStates('accessDetailsState', $event, 'accessTab1State', ['accessTab1State', 'accessTab2State', 'accessTab3State', 'accessTab4State'])">Change it!</button>
+          </div>
+        </div>
+      </div>
+    </widget>
+
+    <widget class="inline full compact" [info]="'info-circle'">
+      <h2 widget-header>How can we contact you with personalised deals?</h2>
+
+      <ul class="details icons above" widget-content>
+        <li>
+          <label>
+            <span class="icon faded">
+              <i class="fa fa-phone-square fa-3x" aria-hidden="true"></i>
+            </span>
+            <input type="checkbox" [(ngModel)]="account?.contact.phone">
+            Phone
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon faded">
+              <i class="fa fa-envelope fa-3x" aria-hidden="true"></i>
+            </span>
+            <input type="checkbox" [(ngModel)]="account?.contact.email">
+            Email
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon faded">
+              <i class="fa fa-mobile fa-3x" aria-hidden="true"></i>
+            </span>
+            <input type="checkbox" [(ngModel)]="account?.contact.text">
+            Text
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon faded">
+              <i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i>
+            </span>
+            <input type="checkbox" [(ngModel)]="account?.contact.social">
+            Social media
+          </label>
+        </li>
+      </ul>
+
+      <span class="message" info-message>We'll only contact you about products, offers and services that we think you may be interested in.</span>
+    </widget>
+
+    <widget class="inline full">
+      <h2 widget-header>Even more stuff...</h2>
+
+      <ul class="details icons above" widget-content>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-envelope fa-3x" aria-hidden="true"></i>
+            </span>
+            Webmail
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-address-card fa-3x" aria-hidden="true"></i>
+            </span>
+            Services manager
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-users fa-3x" aria-hidden="true"></i>
+            </span>
+            Referrals
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-inbox fa-3x" aria-hidden="true"></i>
+            </span>
+            Manage my mail
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-files-o fa-3x" aria-hidden="true"></i>
+            </span>
+            Domains
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-cog fa-3x" aria-hidden="true"></i>
+            </span>
+            Website settings
+          </button>
+        </li>
+      </ul>
+    </widget>
+
+  </article>
+</section>

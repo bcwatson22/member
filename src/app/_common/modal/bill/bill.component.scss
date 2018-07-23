@@ -1,0 +1,126 @@
+@import '~sass/mixins';
+@import '~sass/variables';
+
+.modal-content {
+  width: 50%;
+  height: 60%;
+  top: 20%;
+  left: 25%;
+  padding: 24px;
+  background: #fff;
+
+  .close {
+    background: $pn-red;
+    color: #fff;
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    font-size: 2rem;
+    line-height: 1;
+
+    &:before {
+      content: '\00d7';
+      position: absolute;
+      @include centre();
+    }
+
+    &:hover,
+    &:focus {
+      background: #000;
+    }
+
+    &:active {
+      background: $pn-blue;
+    }
+  }
+}
+
+h2 {
+  padding-bottom: 12px;
+}
+
+h3 {
+  small {
+    display: block;
+    margin: 6px 0 0 36px;
+  }
+}
+
+.detail.status {
+  position: relative;
+  padding-left: 18px;
+
+  i {
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+  }
+
+  a,
+  span {
+    display: block;
+    color: $pn-red;
+  }
+}
+
+.bill-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+
+  .bill-image,
+  .icon,
+  &:after {
+    @include hwa();
+  }
+
+  .bill-image {
+    transition: all 0.2s ease;
+  }
+
+  .icon,
+  &:after {
+    transition: opacity 0.2s ease;
+    left: 50%;
+    opacity: 0;
+    color: #000;
+  }
+
+  .icon {
+    top: 44%;
+    transform: translate(-50%, -44%);
+  }
+
+  &:after {
+    content: 'Download';
+    position: absolute;
+    text-align: center;
+    top: 56%;
+    transform: translate(-50%, -56%);
+  }
+
+  &:hover,
+  &:focus {
+    .bill-image {
+      opacity: 0.2;
+      transform: scale(0.98);
+    }
+
+    .icon,
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    .icon,
+    &:after {
+      color: $pn-blue;
+    }
+  }
+}

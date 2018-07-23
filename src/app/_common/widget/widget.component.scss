@@ -1,0 +1,45 @@
+@import '~sass/mixins';
+@import '~sass/variables';
+
+:host {
+  width: calc(50% - 24px);
+  box-shadow: 0px 0px 5px 1px $border;
+  background: #fff;
+  padding: 24px 0;
+  word-wrap: break-word;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  @include hwa();
+  display: flex;
+  flex-wrap: wrap;
+
+  h2 {
+    padding-bottom: 24px;
+  }
+
+  &.full {
+    width: calc(100% - 24px);
+    flex-direction: row;
+  }
+
+  &.four {
+    width: calc(40% - 24px);
+  }
+
+  &.six {
+    width: calc(60% - 24px);
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: 2px 2px 4px 3px $border;
+    z-index: 2;
+  }
+
+  &[ng-reflect-info],
+  &.info-source-dynamic,
+  &.hidden {
+    padding-bottom: 0;
+  }
+}

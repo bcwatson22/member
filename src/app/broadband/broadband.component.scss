@@ -1,0 +1,32 @@
+@import '~sass/variables';
+
+.speeds {
+  padding: 12px 24px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.speed {
+  width: calc(50% - 24px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &.download {
+    margin-right: 48px;
+  }
+
+  &.upload {
+    margin-left: 48px;
+  }
+
+  h3 {
+    padding-top: 72px;
+    width: auto;
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+}

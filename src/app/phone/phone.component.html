@@ -1,0 +1,322 @@
+<section class="page-content">
+
+  <heading [title]="title">
+    <breadcrumb header-secondary [title]="title"></breadcrumb>
+  </heading>
+
+  <article *ngIf="!phone" class="no-package">
+    <i class="fa fa-meh-o fa-5x" aria-hidden="true"></i>
+    <h1>You don't currently have Plusnet Phone.</h1>
+    <h2><a href="https://www.plus.net" target="_blank">Sign up</a> to enjoy our award-winning services!</h2>
+  </article>
+
+  <article *ngIf="phone" class="widgets" [@widgetAnimation]="widgetState">
+
+    <widget class="issue-status full" [action]="'vertical'">
+
+      <i *ngIf="!issues" class="fa fa-check fa-4x" aria-hidden="true" widget-header></i>
+
+      <article *ngIf="!issues" class="status-bar" widget-content>
+        No issues detected with your phone service.
+      </article>
+
+      <button *ngIf="!issues" class="button primary" action-primary>Report a fault</button>
+
+      <i *ngIf="issues" class="fa fa-exclamation-triangle fa-4x" aria-hidden="true" widget-header></i>
+
+      <article *ngIf="issues" class="status-bar" widget-content>
+        We have detected some issues which could affect your phone service.
+      </article>
+
+      <button *ngIf="issues" class="button primary" action-primary>Report a fault</button>
+
+      <div *ngIf="issues" class="tabbed" action-secondary>
+        <button class="button primary" (click)="utils.toggleUiStates('phoneIssueState', $event, 'issueTab1State', ['speedTab1State'])" action-secondary>See issues</button>
+      </div>
+
+      <div class="hidden-content" [@slideAnimation]="phoneIssueState" widget-extra>
+        <div class="hidden-tab speed-instructions" [@tabAnimation]="issueTab1State">
+          <h2>Unresolved phone issues</h2>
+
+          <div class="issues">
+
+            <div *ngFor="let issue of issues" class="service-issue feature">
+              <i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+              <h3>{{issue?.type}}</h3>
+              <ul>
+                <li><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>{{issue?.details}}</li>
+                <li><i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>{{issue?.date | formatDate}} at {{issue?.date | date:'h:mm a'}}</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="action central">
+            <a href="http://www.plus.net/supportpages.html?a=2" class="button primary" target="_blank">Service status</a>
+          </div>
+        </div>
+      </div>
+
+    </widget>
+
+    <widget class="package current" [action]="'central'">
+      <h2 widget-header>Your phone</h2>
+
+      <article widget-content>
+        <h3>{{phone?.contract.package}}</h3>
+        <p>Calls charged at standard rate. No inclusive calls.</p>
+
+        <div class="package-overview">
+          <div class="feature main">
+            Phone number
+            <span class="pullout">{{broadband?.details.phoneNumber | formatPhoneNo}}</span>
+          </div>
+          <div class="feature subsequent question">
+            <div class="sub">
+              Credit limit
+              <span class="pullout">{{phone?.contract.credit.limit | currency:'GBP':true}}</span>
+            </div>
+            <div class="sub">
+              Credit remaining
+              <span class="pullout">{{phone?.contract.credit.used | subtract:phone?.contract.credit.limit}} <span><button>Top up</button></span></span>
+            </div>
+            <button><i class="fa fa-question-circle fa-2x" aria-hidden="true" widget-extra></i></button>
+          </div>
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>Change your package</button>
+    </widget>
+
+    <widget class="package upgrade" [info]="'exclamation-triangle'">
+      <h2 widget-header>Recommended deal</h2>
+
+      <i class="fa fa-tag fa-4x" aria-hidden="true" widget-extra></i>
+
+      <article widget-content>
+        <h3>Unlimited UK landline and mobile calls</h3>
+        <div class="present icon">
+          <i class="fa fa-certificate" aria-hidden="true"></i>
+          <span>Talk more pay less!</span>
+        </div>
+      </article>
+
+      <span class="message" info-message>Your last phone bill was &pound;18, on this plan it would have been &pound;8.</span>
+      <button class="button primary" info-button>See this deal</button>
+    </widget>
+
+    <widget [info]="'exclamation-triangle'">
+      <h2 widget-header>Mobile minutes</h2>
+
+      <article class="split" widget-content>
+        <div class="left">
+          <p>You've used <span class="pullout">120</span> of your 300 minutes this month</p>
+          <p>Need more minutes?</p>
+          <button class="secondary">Upgrade now</button>
+        </div>
+        <div class="middle">
+          <div class="chart pie" (mouseenter)="animateChart($event)">
+            <div class="spinner" style=""></div>
+            <div class="filler"></div>
+            <div class="mask"></div>
+          </div>
+        </div>
+        <div class="right">
+          <i class="fa fa-calendar fa-2x" aria-hidden="true"></i>
+          Your minutes will reset in <span class="pullout">3 days</span>
+        </div>
+      </article>
+
+      <span class="message" info-message>You're low on minutes. Once you've used them all you'll be charged per minute.</span>
+      <button class="button primary" info-button>Go to price guide</button>
+    </widget>
+
+    <widget [action]="'horizontal'">
+      <h2 widget-header>International minutes</h2>
+
+      <article widget-content>
+        <div class="box">
+          <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
+          We've noticed you make some international calls. You currently don't have any international minutes which means you're paying more than you need to.
+        </div>
+      </article>
+
+      <button class="button primary" action-primary>Add minutes</button>
+      <button class="secondary" action-secondary>How much do international calls cost?</button>
+    </widget>
+
+    <widget class="full">
+      <h2 widget-header>Calls and charges</h2>
+
+      <article class="blocks two left" widget-content>
+
+        <div class="block">
+          <h3>Recent calls</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Destination</th>
+                <th>Time</th>
+                <th>Length</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let call of calls">
+                <td>{{call.destination | formatPhoneNo}}</td>
+                <td>{{call.time | date:'H:mm'}} on {{call.time | date:'d/M/yy'}}</td>
+                <td>{{call.length}}</td>
+                <td>{{call.cost | currency:'GBP':true}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="action">
+            <button class="button primary">View all calls</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Call calculator</h3>
+          <div class="content">
+            <div class="text-input">
+              <input type="text" required>
+              <label>What number do you want to call?</label>
+            </div>
+            <button class="button primary">How much will it cost?</button>
+          </div>
+          <div class="action">
+            <button class="button primary">Go to tariff guide</button>
+          </div>
+        </div>
+
+      </article>
+    </widget>
+
+    <widget class="full add-ons" [action]="'line'">
+      <h2 widget-header>Your add ons</h2>
+
+      <article class="blocks four" widget-content>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-microphone fa-2x" aria-hidden="true"></i> Voicemail</h3>
+          <p>Never miss another call with our answer phone service.</p>
+          <span class="status active"><i class="fa fa-check" aria-hidden="true"></i> Active</span>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-paper-plane-o fa-2x" aria-hidden="true"></i> Call Divert</h3>
+          <p>Direct your incoming calls to any other phone.</p>
+          <span class="status pending"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Pending</span>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-volume-control-phone fa-2x" aria-hidden="true"></i> Ring Back</h3>
+          <p>Get a call back if the number you're dialling is engaged.</p>
+          <span class="status pending"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Pending</span>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-bell-o fa-2x" aria-hidden="true"></i> Reminder Call</h3>
+          <p>Set your phone for an alarm call.</p>
+          <span class="status inactive"><i class="fa fa-times" aria-hidden="true"></i> Removal pending</span>
+        </div>
+
+      </article>
+
+      <button class="button secondary" action-primary>Show all (+2)</button>
+      <button class="secondary inline-icon" action-secondary><i class="fa fa-cog fa-2x" aria-hidden="true"></i>Manage add ons</button>
+    </widget>
+
+    <widget class="full add-ons" [action]="'line'">
+      <h2 widget-header>Available add ons</h2>
+
+      <article class="blocks four" widget-content>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-plug fa-2x" aria-hidden="true"></i> Line Rental Saver</h3>
+          <p>Save money by paying for 12 months' line rental.</p>
+          <div class="action">
+            <button class="button primary">Learn more</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-id-badge fa-2x" aria-hidden="true"></i> Caller Display</h3>
+          <p>See who is calling you with Caller Display.</p>
+          <div class="action">
+            <button class="button primary">Add Caller Display</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-ban fa-2x" aria-hidden="true"></i> Anonymous Call</h3>
+          <p>Bar incoming calls from people who withhold their number.</p>
+          <div class="action">
+            <button class="button primary">Add Anonymous Call</button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="inline-icon"><i class="fa fa-spinner fa-2x" aria-hidden="true"></i> Call Waiting</h3>
+          <p>Be alerted when you have an incoming call while on another call.</p>
+          <div class="action">
+            <button class="button primary">Add Call Waiting</button>
+          </div>
+        </div>
+
+      </article>
+
+      <button class="button secondary" action-primary>Show all (+4)</button>
+      <button class="secondary inline-icon" action-secondary><i class="fa fa-question-circle fa-2x" aria-hidden="true"></i>Go to add ons guide</button>
+    </widget>
+
+    <widget class="inline full">
+      <h2 widget-header>Even more stuff...</h2>
+
+      <ul class="details icons above" widget-content>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-line-chart fa-3x" aria-hidden="true"></i>
+            </span>
+            Call tariff guide
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-bullhorn fa-3x" aria-hidden="true"></i>
+            </span>
+            Nuisance calls guide
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-question fa-3x" aria-hidden="true"></i>
+            </span>
+            Phone FAQ
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-user-md fa-3x" aria-hidden="true"></i>
+            </span>
+            Troubleshooting guide
+          </button>
+        </li>
+        <li>
+          <button>
+            <span class="icon faded">
+              <i class="fa fa-file-text fa-3x" aria-hidden="true"></i>
+            </span>
+            Itemised bill
+          </button>
+        </li>
+      </ul>
+    </widget>
+
+  </article>
+
+</section>
