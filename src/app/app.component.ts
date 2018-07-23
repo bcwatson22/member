@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
 
           // If we're navigating to a different route, use the ES2015 .find() function to match the new and previous routes to their
           // counterparts in the navItems data.
-          let currentItem = this.navItems.find(o => o.id === this.currentPage);
+          let currentItem = (this.currentPage) ? this.navItems.find(o => o.id === this.currentPage) : {position: 1};
           let targetItem = this.navItems.find(o => o.id === this.targetPage);
 
           // The navData has a 'position' property that is used to structure the nav order. Here we pass the position property to a
