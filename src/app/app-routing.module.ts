@@ -50,6 +50,10 @@ const routes: Routes = [
     {
       path: 'tv',
       component: TvComponent
+    },
+    {
+      path: '**',
+      redirectTo: '/dashboard'
     }
 ];
 
