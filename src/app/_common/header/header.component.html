@@ -1,12 +1,14 @@
 <header>
-  <div class="text-input inline-icon">
+  <div class="welcome">
+    <h1>{{title}}</h1>
+    <ng-content select="[header-secondary]"></ng-content>
+  </div>
+
+  <div class="text-input inline-icon search-field">
     <input name="search" type="text" [(ngModel)]="searchText" (ngModelChange)="searchPress($event)" required>
     <label for="search">Start typing to search help articles</label>
     <i class="fa fa-search" aria-hidden="true"></i>
   </div>
-
-  <h1>{{title}}</h1>
-  <ng-content select="[header-secondary]"></ng-content>
 </header>
 
 <search-results [results]="searchResults" [searchTerm]="searchText" [progressPercent]="searchProgressPercent" [progressValue]="searchProgressValue" [@modalAnimation]="searchResultState" (revertSearch)="clearSearch()"></search-results>

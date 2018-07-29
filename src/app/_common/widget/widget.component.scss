@@ -43,3 +43,14 @@
     padding-bottom: 0;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  :host {
+    width: calc(100% - 24px);
+
+    &.four,
+    &.six {
+      width: calc(100% - 24px);
+    }
+  }
+}

@@ -1,6 +1,40 @@
 @import '~sass/mixins';
 
-.text-input {
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.welcome,
+.search-field {
   width: calc(50% - 12px);
-  float: right;
+}
+
+.search-field {
+  height: 48px;
+
+  &.focused {
+    z-index: 10;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .welcome,
+  .search-field {
+    width: 100%;
+  }
+
+  .welcome {
+    margin-bottom: 24px;
+  }
+
+  .search-field {
+    max-width: none;
+
+    &.focused {
+      position: fixed;
+      width: calc(100% - (100vh / 7) - 48px);
+    }
+  }
 }

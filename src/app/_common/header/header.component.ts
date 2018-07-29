@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit {
 
       if (event.length === 1) {
 
-        $searchBar.style.zIndex = '10';
+        $searchBar.classList.add('focused');
         this.searchResultState = 'animate';
 
       }
@@ -96,7 +96,7 @@ export class HeaderComponent implements OnInit {
   // Extracted the revert code into its own method as it's called in two places.
   revertSearchState(searchBar: any): void {
 
-    searchBar.style.zIndex = 'auto';
+    searchBar.classList.remove('focused');
 
     this.searchResultState = null;
     this.searchProgressPercent = '100';

@@ -76,3 +76,13 @@ h2 {
     margin: 0;
   }
 }
+
+@media screen and (max-width: 700px) {
+  .search-result {
+    width: 100%;
+
+    &:nth-of-type(odd) {
+      margin-left: 0;
+    }
+  }
+}
